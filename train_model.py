@@ -2,7 +2,7 @@ import torch
 import numpy as np
 import torch.nn as nn
 from sklearn.metrics import confusion_matrix
-
+from loss_landscape import visualize_loss_landscape_3d, HybridNet
 from surrogate_gradient import SurrGradSpike
 
 
@@ -238,6 +238,16 @@ def train_and_val(
                 "final_val_accuracy": val_accuracy,
             }
         )
+
+    visualize_loss_landscape_3d(
+    model=HybridNet(w1, w2, v1, model),
+    w1=w1, w2=w2, v1=v1,
+    dataloader=test_loader,
+    loss_fn=loss_fn,
+    radius=0.05,
+    resolution=31,
+    device=device
+    )
 
     return val_accuracy  # For training sweeps
 
