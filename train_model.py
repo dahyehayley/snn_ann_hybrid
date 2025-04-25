@@ -4,6 +4,8 @@ import torch.nn as nn
 from sklearn.metrics import confusion_matrix
 from loss_landscape import visualize_loss_landscape_3d, HybridNet
 from surrogate_gradient import SurrGradSpike
+from models import SNN
+from functools import partial
 
 
 def train_and_val(
@@ -239,8 +241,29 @@ def train_and_val(
             }
         )
 
+    # pick whichever model function you want:
+    base_forward = SNN
+
+    # now bind all the extra parameters into it:
+    bound_forward = partial(
+        base_forward,
+        w1=w1, w2=w2, v1=v1,
+        alpha=alpha, beta=beta,
+        spike_fn=spike_fn,
+        device=device,
+        recurrent=recurrent,
+        snn_mask=snn_mask
+    )
+    # note: partial will reorder so that bound_forward(x) just needs `inputs=x`
+
+    # finally, build the nn.Module wrapper
+    model = HybridNet(
+        forward_fn=bound_forward,
+        w1=w1, w2=w2, v1=v1
+    ).to(device)
+
     visualize_loss_landscape_3d(
-    model=HybridNet(w1, w2, v1, model),
+    model=model,
     w1=w1, w2=w2, v1=v1,
     dataloader=test_loader,
     loss_fn=loss_fn,

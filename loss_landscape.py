@@ -4,19 +4,33 @@ import torch
 from mpl_toolkits.mplot3d import Axes3D  # registers the 3D projection
 import torch.nn as nn
 
+
+# wrap SNN into a single-arg function
+def snn_forward(x):
+    return SNN(
+        x,             # inputs
+        w1, w2, v1,    # your global parameters
+        alpha, beta,   # time constants
+        spike_fn,      # spike nonlinearity
+        device,        # device to run on
+        recurrent,     # bool for recurrent connectivity
+        snn_mask       # any mask tensor you need
+    )
+
 class HybridNet(nn.Module):
-    def __init__(self, w1, w2, v1, forward_fn):
+    def __init__(self, forward_fn, w1, w2, v1):
         super().__init__()
-        # register them so they’re tracked by PyTorch
+        # register the *weight* parameters
         self.w1 = nn.Parameter(w1)
         self.w2 = nn.Parameter(w2)
         self.v1 = nn.Parameter(v1)
+        # everything else is closed over in forward_fn
         self._forward_fn = forward_fn
 
     def forward(self, x):
-        # delegate to your existing function
+        # call your bound‐argument forward, which now only needs x
         return self._forward_fn(x)
-    
+
         
 def visualize_loss_landscape_3d(model, w1, w2, v1,
                                     dataloader, loss_fn,
