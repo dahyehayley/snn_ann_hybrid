@@ -26,7 +26,7 @@ def main():
     parser.add_argument(
         "--data_config_path",
         type=str,
-        default="/scratch/nar8991/snn/snn_ann_hybrid/nmnist_config.json",
+        default="/scratch/dk3343/snn_ann_hybrid/nmnist_config.json",
         help="Path to the configuration JSON file.",
     )
     args = parser.parse_args()
@@ -44,7 +44,7 @@ def main():
             "learning_rate": {
                 "value": 2e-3  # Keep learning rate constant for this sweep
             },
-            "epochs": {"value": 40},
+            "epochs": {"value": 10},
             "regularization": {"value": True},
             "optimizer": {"value": "Adam"},
             "model_name": {"value": "SNN"},
