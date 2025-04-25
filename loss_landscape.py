@@ -2,7 +2,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import torch
 from mpl_toolkits.mplot3d import Axes3D  # registers the 3D projection
-
+import torch.nn as nn
 
 class HybridNet(nn.Module):
     def __init__(self, w1, w2, v1, forward_fn):
