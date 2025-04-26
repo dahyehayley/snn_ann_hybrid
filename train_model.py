@@ -251,7 +251,7 @@ def train_and_val(
         alpha=alpha, beta=beta,
         spike_fn=spike_fn,
         device=device,
-        recurrent=recurrent,
+        recurrent=config.recurrent,
         snn_mask=snn_mask
     )
     # note: partial will reorder so that bound_forward(x) just needs `inputs=x`
