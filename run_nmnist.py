@@ -39,8 +39,8 @@ def main():
         "name": "SNN Regularization Sweep",
         "metric": {"name": "val_accuracy", "goal": "maximize"},
         "parameters": {
-            "l1": {"values": [1e-6, 5e-6, 1e-5]},
-            "l2": {"values": [1e-6, 5e-6, 1e-5]},
+            "l1": {"values": [1e-6]}, # 1e-6, 5e-6, 1e-5]},
+            "l2": {"values": [1e-6]}, # 1e-6, 5e-6, 1e-5]},
             "learning_rate": {
                 "value": 2e-3  # Keep learning rate constant for this sweep
             },
