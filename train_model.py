@@ -257,13 +257,14 @@ def train_and_val(
     # note: partial will reorder so that bound_forward(x) just needs `inputs=x`
 
     # finally, build the nn.Module wrapper
-    model = HybridNet(
+    model_wrapper = HybridNet(
         forward_fn=bound_forward,
         w1=w1, w2=w2, v1=v1
     ).to(device)
 
     visualize_loss_landscape_3d(
-    model=model,
+    model=model_wrapper,
+    model_name = model.__name__,
     w1=w1, w2=w2, v1=v1,
     dataloader=test_loader,
     loss_fn=loss_fn,

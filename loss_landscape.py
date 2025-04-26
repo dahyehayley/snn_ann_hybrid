@@ -32,7 +32,7 @@ class HybridNet(nn.Module):
         return self._forward_fn(x)
 
         
-def visualize_loss_landscape_3d(model, w1, w2, v1,
+def visualize_loss_landscape_3d(model, model_name, w1, w2, v1,
                                     dataloader, loss_fn,
                                     radius=0.1, resolution=21,
                                     device='cpu'):
@@ -93,8 +93,8 @@ def visualize_loss_landscape_3d(model, w1, w2, v1,
     ax2d.set_ylabel("β")
     ax2d.set_title("2D Loss Contour")
     # Save as high-res PNG
-    fig2d.savefig(f"{model.__class__.__name__}_2d_loss_contour.png", dpi=300, bbox_inches="tight")
-    wandb.log({ "2D Loss Contour": wandb.Image(f"{model.__class__.__name__}_2d_loss_contour.png") })
+    fig2d.savefig(f"{model_name}_2d_loss_contour.png", dpi=300, bbox_inches="tight")
+    # wandb.log({ "2D Loss Contour": wandb.Image(f"{model_name}_2d_loss_contour.png") })
     plt.show()
 
     # 8b) 3D surface
@@ -107,8 +107,8 @@ def visualize_loss_landscape_3d(model, w1, w2, v1,
     ax3d.set_title("3D Loss Surface")
     fig3d.colorbar(surf, shrink=0.5, aspect=10, label="Loss")
     # Save to PNG
-    fig3d.savefig(f"{model.__class__.__name__}_3d_loss_surface.png", dpi=300, bbox_inches="tight")
-    wandb.log({ "3D Loss Surface": wandb.Image(f"{model.__class__.__name__}_3d_loss_surface.png") })
+    fig3d.savefig(f"{model_name}_3d_loss_surface.png", dpi=300, bbox_inches="tight")
+    # wandb.log({ "3D Loss Surface": wandb.Image(f"{model_name}_3d_loss_surface.png") })
     plt.show()
 
 
