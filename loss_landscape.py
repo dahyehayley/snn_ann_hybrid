@@ -86,29 +86,29 @@ def visualize_loss_landscape_3d(model, w1, w2, v1,
     v1.data.copy_(orig_v1)
 
     # 8a) 2D contour
-    plt.figure(figsize=(5,4))
-    cs = plt.contourf(alphas, betas, loss_mat, levels=30, cmap='viridis')
-    plt.colorbar(cs, label="Loss")
-    plt.xlabel("α"); plt.ylabel("β")
-    plt.title("2D Loss Contour")
-    # Save as high‑res PNG
-    fig.savefig(f"{model.__name__}_2d_loss_contour.png", dpi=300, bbox_inches="tight")
+    fig2d, ax2d = plt.subplots(figsize=(5,4))
+    cs = ax2d.contourf(alphas, betas, loss_mat, levels=30, cmap='viridis')
+    fig2d.colorbar(cs, ax=ax2d, label="Loss")
+    ax2d.set_xlabel("α")
+    ax2d.set_ylabel("β")
+    ax2d.set_title("2D Loss Contour")
+    # Save as high-res PNG
+    fig2d.savefig(f"{model.__class__.__name__}_2d_loss_contour.png", dpi=300, bbox_inches="tight")
     plt.show()
 
     # 8b) 3D surface
     A, B = np.meshgrid(alphas, betas)
-    fig = plt.figure(figsize=(6,5))
-    ax  = fig.add_subplot(111, projection='3d')
-    surf = ax.plot_surface(A, B, loss_mat, cmap='viridis',
-                           edgecolor='none', alpha=0.9)
-    ax.set_xlabel("α"); ax.set_ylabel("β"); ax.set_zlabel("Loss")
-    ax.set_title("3D Loss Surface")
-    fig.colorbar(surf, shrink=0.5, aspect=10, label="Loss")
-    
+    fig3d = plt.figure(figsize=(6,5))
+    ax3d  = fig3d.add_subplot(111, projection='3d')
+    surf = ax3d.plot_surface(A, B, loss_mat, cmap='viridis',
+                            edgecolor='none', alpha=0.9)
+    ax3d.set_xlabel("α"); ax3d.set_ylabel("β"); ax3d.set_zlabel("Loss")
+    ax3d.set_title("3D Loss Surface")
+    fig3d.colorbar(surf, shrink=0.5, aspect=10, label="Loss")
     # Save to PNG
-    fig.savefig(f"{model.__name__}_3d_loss_surface.png", dpi=300, bbox_inches="tight")
-    
+    fig3d.savefig(f"{model.__class__.__name__}_3d_loss_surface.png", dpi=300, bbox_inches="tight")
     plt.show()
+
 
 """
 # Usage:
