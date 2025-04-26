@@ -92,7 +92,7 @@ def visualize_loss_landscape_3d(model, w1, w2, v1,
     plt.xlabel("α"); plt.ylabel("β")
     plt.title("2D Loss Contour")
     # Save as high‑res PNG
-    ig.savefig(f"{model.__name__}_2d_loss_contour.png", dpi=300, bbox_inches="tight")
+    fig.savefig(f"{model.__name__}_2d_loss_contour.png", dpi=300, bbox_inches="tight")
     plt.show()
 
     # 8b) 3D surface
