@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 import torch
 from mpl_toolkits.mplot3d import Axes3D  # registers the 3D projection
 import torch.nn as nn
-
+import wandb
 
 # wrap SNN into a single-arg function
 def snn_forward(x):
@@ -94,6 +94,7 @@ def visualize_loss_landscape_3d(model, w1, w2, v1,
     ax2d.set_title("2D Loss Contour")
     # Save as high-res PNG
     fig2d.savefig(f"{model.__class__.__name__}_2d_loss_contour.png", dpi=300, bbox_inches="tight")
+    wandb.log({ "2D Loss Contour": wandb.Image(f"{model.__class__.__name__}_2d_loss_contour.png") })
     plt.show()
 
     # 8b) 3D surface
@@ -107,6 +108,7 @@ def visualize_loss_landscape_3d(model, w1, w2, v1,
     fig3d.colorbar(surf, shrink=0.5, aspect=10, label="Loss")
     # Save to PNG
     fig3d.savefig(f"{model.__class__.__name__}_3d_loss_surface.png", dpi=300, bbox_inches="tight")
+    wandb.log({ "3D Loss Surface": wandb.Image(f"{model.__class__.__name__}_3d_loss_surface.png") })
     plt.show()
 
 
