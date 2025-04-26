@@ -45,7 +45,7 @@ def main():
                 "value": 2e-3  # Keep learning rate constant for this sweep
             },
             "epochs": {"value": 40},
-            "regularization": {"value": True},
+            "regularization": {"value": False},
             "optimizer": {"value": "Adam"},
             "model_name": {"value": "SNN"},
             "recurrent": {"value": True},
